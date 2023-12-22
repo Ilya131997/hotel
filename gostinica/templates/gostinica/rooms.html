@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-3">
+    <!-- Кнопки для выбора типа номера -->
+    <div class="text-center mb-3 mt-3"> <!-- Добавлен mt-3 для верхнего отступа -->
+        <button class="btn btn-primary" data-room-type="all" data-description="all">Все номера</button>
+        <button class="btn btn-primary" data-room-type="Люкс" data-description="Люкс111">Люкс</button>
+        <button class="btn btn-primary" data-room-type="Полу-люкс" data-description="Полу-люкс">Полулюкс</button>
+        <button class="btn btn-primary" data-room-type="Обычный" data-description="Обычный">Обычный</button>
+        <!-- Добавьте кнопки для других типов номеров, если необходимо -->
+        <div id="description-container"></div>
+
+    </div>
+
+    <div class="row" id="room-list-container">
+        {% for r in filtered_rooms %}
+        <div class="col-md-3 mb-3" data-room-type="{{ r.typeroom }}">
+            <div class="card">
+                {% if r.photo %}
+                <img src="{{ r.photo.url }}" class="card-img-top" alt="Room Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ r.room_number }}</h5>
+                    <p class="card-text">Тип: {{ r.typeroom }}</p>
+                    <p class="card-text">Стоимость за ночь: {{ r.cost_night }}</p>
+                    <a href="#" class="btn btn-primary">Забронировать</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    // JavaScript для обработки нажатий на кнопки выбора типа номера
+    document.addEventListener('DOMContentLoaded', function() {
+    const roomButtons = document.querySelectorAll('.btn[data-room-type]');
+    const roomListContainer = document.getElementById('room-list-container');
+    const descriptionContainer = document.getElementById('description-container'); // Это контейнер, в который вы хотите вставлять описание
+
+    roomButtons.forEach(function(button) {
+        button.addEventListener('mouseenter', function() {
+            const description = this.getAttribute('data-description');
+            descriptionContainer.innerText = description;
+        });
+
+        button.addEventListener('click', function() {
+            const selectedRoomType = this.getAttribute('data-room-type');
+            roomListContainer.childNodes.forEach(function(room) {
+                if (room.nodeType === 1) {
+                    if (selectedRoomType === 'all' || room.getAttribute('data-room-type') === selectedRoomType) {
+                        room.style.display = 'block';
+                    } else {
+                        room.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+});
+
+</script>
+
+{% endblock %}

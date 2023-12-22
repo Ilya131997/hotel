@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+Hello world
+{% for r in room_list %}
+<div class="article-panel">
+    <p>{{r.room_number}}</p>
+    <p>{{r.cost_night}}</p>
+    <p>{{r.description}}</p>
+    <p>{{r.typeroom}}</p>
+</div>
+
+
+
+{% endfor %}
+{% endblock %}
