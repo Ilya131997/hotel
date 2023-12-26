@@ -28,15 +28,29 @@
                 <li><a href="#" class="nav-link px-2 text-white">About</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
-                       aria-label="Search">
-            </form>
 
-            <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Login</button>
-                <button type="button" class="btn btn-warning">Sign-up</button>
+            <!-- Кнопки войти -->
+            <div class="text-end" style="display: flex; gap: 10px;">
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'users:logout' %}">
+                    {% csrf_token %}
+                    {{ user.username }} |
+                    <button type="submit" class="btn btn-warning">Выйти</button>
+                </form>
+                {% else %}
+                <form method="post" action="{% url 'users:login' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">Войти</button>
+                </form>
+                <form method="post" action="{% url 'users:register' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">Регистрация</button>
+                </form>
+                {% endif %}
+                <!--                <button type="button" class="btn btn-warning">Sign-up</button>-->
             </div>
+            <!-- Кнопки войти -->
+
         </div>
     </div>
 </header>

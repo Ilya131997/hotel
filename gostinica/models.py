@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class Room(models.Model):
     """
-    Class for room model
+    Класс Room это модель комнаты в бд
     """
     room_number = models.IntegerField(verbose_name='Номер комнаты')
     cost_night = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена за ночь')
@@ -28,7 +28,7 @@ class Room(models.Model):
 
 class TypeRoom(models.Model):
     """
-    Class for typeroom model
+    Класс TypeRoom это модель типа комнат в бд
     """
     title = models.CharField(max_length=20, verbose_name='Название')
 
