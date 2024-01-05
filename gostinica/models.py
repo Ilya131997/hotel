@@ -1,6 +1,28 @@
+from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
+
+
+
+class Build_obj(models.Model):
+    """
+    Класс Build_obj это объект, строение, территория у которой могут быть номера,услуги и тд
+    """
+    title = models.CharField(max_length=50, verbose_name='Название объекта')
+    address = models.CharField(max_length=50, verbose_name='Адрес объекта')
+
+    class Meta:
+        verbose_name = 'Объект'
+        verbose_name_plural = 'Обьекты'
+        ordering = ['title']
+
+    def __str__(self):
+        """
+        Метод __str__ возвращает атрибут объекта(название)
+        """
+        return self.title
 
 class Room(models.Model):
     """
@@ -10,6 +32,7 @@ class Room(models.Model):
     cost_night = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена за ночь')
     description = models.TextField(null=True, verbose_name='Описание')
     typeroom = models.ForeignKey('TypeRoom', on_delete=models.SET_NULL, null=True, verbose_name='Тип номера')
+    build = models.ForeignKey('Build_obj', on_delete=models.SET_NULL, null=True, verbose_name='Объект')
     photo = models.ImageField(upload_to="photos_rooms", default=None, blank=True, null=True, verbose_name='Фото номера')
 
     class Meta:
@@ -23,8 +46,9 @@ class Room(models.Model):
         """
         return str(self.room_number)
 
-    # def get_absolute_url(self):
-    #     return reverse('')
+    def get_absolute_url(self):
+        return reverse('rooms', args=[str(self.pk)])
+
 
 class TypeRoom(models.Model):
     """
@@ -42,18 +66,21 @@ class TypeRoom(models.Model):
         """
         return self.title
 
-# # Бронирование
-# class Reservation(models.Model):
-#     check_in_date = models.DateField()
-#     check_out_date = models.DateField()
-#     room = models.ForeignKey('Room', on_delete=models.CASCADE)
-#     user = models.ForeignKey('User', on_delete=models.CASCADE)
-#     STATUS_CHOICES = (('o','Open'),('c','Close'))
-#     status = models.CharField(max_length=20,choices=STATUS_CHOICES,default='o')
-#
-# # Пользователь
-# class UserProfile(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+# Бронирование
+class Reservation(models.Model):
+    check_in_date = models.DateField()
+    check_out_date = models.DateField()
+    room = models.ForeignKey('Room', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    STATUS_CHOICES = (('o', 'Open'), ('c', 'Close'))
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='o')
+
+    def __str__(self):
+        """
+        Return string Room number
+        """
+        return str(self.room) + str(self.user)
+
 #
 # # Отзыв
 # class Review(models.Model):

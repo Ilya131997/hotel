@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Список номеров</h2>
+
+{% for room in room_list %}
+<li>
+    <a href="{% url 'room_edit' pk=room.pk %}"><button>{{ room.room_number }}</button></a>
+    {{ room.cost_night }}
+    {{ room.description }}
+    {{ room.typeroom }}
+    {% if room.photo %}<img src="{{ room.photo.url }}" width="200" height="300">{% endif %}
+    <a href="{% url 'room_delete' pk=room.pk %}">Удалить</a>
+</li>
+{% endfor %}
+
+{% endblock %}

@@ -3,16 +3,24 @@ from django.utils.safestring import mark_safe
 
 from .models import *
 
+@admin.register(Build_obj)
+class BuildObjAdmin(admin.ModelAdmin):
+    """
+    Класс BuildObjAdmin для создания объектов в админке
+    """
+    list_display = ('title', 'address')
+    fields = ['title', 'address']
+
 
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     """
     Класс RoomAdmin служит созданию комнат в админке
     """
-    list_display = ('room_number', 'photo', 'room_photo', 'cost_night', 'typeroom', 'description')
+    list_display = ('build', 'room_number', 'room_photo', 'cost_night', 'typeroom', 'description')
     readonly_fields = ['room_photo']
     list_filter = ('cost_night', 'typeroom')
-    fields = ['room_number', 'photo', 'room_photo', 'cost_night', 'typeroom', 'description']
+    fields = ['build', 'room_number', 'room_photo', 'cost_night', 'typeroom', 'description']
     list_display_links = ['room_number', 'cost_night']
 
     @admin.display(description='Изображение')

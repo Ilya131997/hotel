@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'gostinica.apps.GostinicaConfig',
+    'gostinica',
 
 ]
 
@@ -115,8 +115,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+# строка с префиксом URL-адреса для статических файлов
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
+# каталог размещения медиа-файлов (для загрузки и чтения)
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
@@ -127,3 +132,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+LOGIN_URL = 'users:login'
+
+# Заменяем user на нашу модель User
+AUTH_USER_MODEL = 'users.User'
+
+# Для аутентифицакии
+AUTHENTICATION_BACKENDS = [
+    # Стандартный
+    'django.contrib.auth.backends.ModelBackend',
+    # Встроенный аутентификатор по Email
+    'users.authentication.EmailAuthBackend'
+]
+
+DEFAULT_USER_IMAGE = MEDIA_URL + 'users/default.png'

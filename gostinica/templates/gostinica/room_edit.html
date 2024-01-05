@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center align-items-center mt-3">
+        <div class="col-md-3">
+            <h1 class="text-center mb-4">Редактирование номера</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}"/>
+                {% for f in form %}
+                <div class="form-floating">
+                    {% if f.name == 'photo' %}
+                    <img src="{{ f.value.url }}" alt="User Photo" width="100" height="200">
+                    <p><label class="form-label">{{ f.label }}</label>{{ f }}</p>
+                    {% else %}
+                    <p><label class="form-label">{{ f.label }}</label>{{ f }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button class="btn btn-primary w-100 py-2" type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

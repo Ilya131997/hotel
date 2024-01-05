@@ -6,10 +6,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Bootstrap CSS и JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 <body>
+
 
 <header class="p-3 text-bg-dark">
     <div class="container">
@@ -21,28 +25,59 @@
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="{% url 'home' %}" class="nav-link px-2 text-secondary">Home</a></li>
+                <!--Ссылки для клиента  -->
                 <li><a href="{% url 'rooms' %}" class="nav-link px-2 text-white">Номера</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">Цены</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">Услуги</a></li>
+                <li><a href="{% url 'table' %}" class="nav-link px-2 text-white">Контакты</a></li>
+                <li><a href="{% url 'addroom' %}" class="nav-link px-2 text-white">Добавить номер</a></li>
+                <li><a href="{% url 'room_list' %}" class="nav-link px-2 text-white">Редактирование номеров</a></li>
+
+                <li><a href="reservation_room" class="nav-link px-2 text-white">Бронирование</a></li>
+
+                <li><a href="#" class="nav-link px-2 text-white">Администратор</a></li>
+                <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Объекты
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href=""></a>
+                        <button class="dropdown-item" type="button">Дом 20</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button">Дом 18</button>
+                    </li>
+                </ul>
+            </div>
             </ul>
+
 
 
             <!-- Кнопки войти -->
             <div class="text-end" style="display: flex; gap: 10px;">
                 {% if user.is_authenticated %}
+                <!-- Кнопка профиля -->
+                <a href="{% url 'users:profile' %}"><button type="submit" class="btn btn-info">{{ user.username }}</button></a>
+
+
                 <form method="post" action="{% url 'users:logout' %}">
+                    <!-- Кнопка выйти -->
                     {% csrf_token %}
-                    {{ user.username }} |
                     <button type="submit" class="btn btn-warning">Выйти</button>
                 </form>
                 {% else %}
+
                 <form method="post" action="{% url 'users:login' %}">
+                    <!-- Кнопка профиля -->
                     {% csrf_token %}
                     <button type="submit" class="btn btn-warning">Войти</button>
                 </form>
+
                 <form method="post" action="{% url 'users:register' %}">
+                    <!-- Кнопка регистрации -->
                     {% csrf_token %}
                     <button type="submit" class="btn btn-warning">Регистрация</button>
                 </form>
@@ -54,6 +89,7 @@
         </div>
     </div>
 </header>
+
 
 {% block content %}
 
