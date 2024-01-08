@@ -70,7 +70,7 @@ class TypeRoom(models.Model):
 class Reservation(models.Model):
     check_in_date = models.DateField()
     check_out_date = models.DateField()
-    room = models.ForeignKey('Room', on_delete=models.CASCADE)
+    room = models.ForeignKey('Room', on_delete=models.CASCADE, verbose_name='Комната')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     STATUS_CHOICES = (('o', 'Open'), ('c', 'Close'))
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='o')
@@ -79,7 +79,7 @@ class Reservation(models.Model):
         """
         Return string Room number
         """
-        return str(self.room) + str(self.user)
+        return f"{self.user} зарегистрировал {self.room} от {self.check_in_date} до {self.check_out_date}"
 
 #
 # # Отзыв

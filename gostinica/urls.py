@@ -12,4 +12,6 @@ urlpatterns = [
     path('room_list/<int:pk>/delete/', views.RoomDeleteView.as_view(), name='room_delete'),
     path('reservation_room/', views.ReservationView.as_view(), name='reservation_room'),
     path('table/', views.table, name='table'),
+    path('admin_room_list/', views.AdminRoomListView.as_view(), name='admin_room_list'),
+    path('reservation_admin_page', views.AdminReservationList.as_view(), name='reservation_admin_page')
 ]

@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'gostinica',
-
+    'gostinica.gostinica_functions',
 ]
 
 MIDDLEWARE = [
@@ -117,6 +117,7 @@ USE_TZ = True
 
 # строка с префиксом URL-адреса для статических файлов
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Страница бронирований</h1>
+
+<form method="get" action="{% url 'reservation_admin_page' %}">
+    <label for="month_selector">Выберите месяц: </label>
+    <input type="month" id="month_selector" name="month" value="{% if selected_month %}{{ selected_month }}{% endif %}">
+    <button type="submit">Применить</button>
+</form>
+
+<div class="table-responsive small">
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th scope="col">Комната</th>
+            {% for day in days_in_month %}
+            <th scope="col">{{ day }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for room in rooms %}
+            <tr>
+                <td>{{ room }}</td>
+                {% for day in days_in_month %}
+                    <td class="reservation-cell">
+                        {% for reservation in reservation_list %}
+                            {% if reservation.room == room and reservation.check_in_date.day <= day and reservation.check_out_date.day >= day %}
+                                <div class="reservation-range"
+                                     data-room="{{ room }}"
+                                     data-day="{{ day }}"
+                                     data-reservation-id="{{ reservation.id }}">
+                                    Бронь: {{ reservation.user }} ({{ reservation.check_in_date|date:'d.m.Y' }} - {{ reservation.check_out_date|date:'d.m.Y' }})
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

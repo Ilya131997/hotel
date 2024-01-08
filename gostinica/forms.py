@@ -1,14 +1,16 @@
 from django import forms
-from .models import Room, Reservation, TypeRoom
+from .models import Room, Reservation, TypeRoom, Build_obj
 
 
 class CreateRoomForm(forms.ModelForm):
     type_room = forms.ModelChoiceField(queryset=TypeRoom.objects.all(), empty_label='Категория не выбрана',
                                        label='Тип номера', widget=forms.Select(attrs={'class': 'form-control'}))
+    build = forms.ModelChoiceField(queryset=Build_obj.objects.all(), empty_label='Категория не выбрана',
+                                       label='Объект', widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Room
-        fields = ['room_number', 'cost_night', 'description', 'type_room', 'photo']
+        fields = ['build', 'room_number', 'cost_night', 'description', 'type_room', 'photo']
 
         widgets = {
             'room_number': forms.TextInput(attrs={'class': 'form-control'}),

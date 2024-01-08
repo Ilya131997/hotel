@@ -2,7 +2,7 @@
 
 {% block content %}
 <h2>Список номеров</h2>
-
+<a href="{% url 'addroom' %}"><button>Добавить номер</button></a>
 {% for room in room_list %}
 <li>
     <a href="{% url 'room_edit' pk=room.pk %}"><button>{{ room.room_number }}</button></a>

@@ -1,0 +1,18 @@
+.reservation-cell {
+    position: relative;
+}
+
+.reservation-range {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #8dc7e6; /* Цвет выделения */
+    opacity: 0.7; /* Прозрачность выделения */
+    cursor: pointer;
+}
+
+.reservation-range:hover {
+    opacity: 1; /* Прозрачность при наведении */
+}
